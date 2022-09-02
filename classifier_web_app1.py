@@ -53,7 +53,7 @@ def main():
             st.title('Data Selection for EDA')
             st.info('Please select features/columns to explore') # INFO FOR SELECTING FEATURES
 
-            if st.checkbox('Please select this box and then select the columns you want to analyze from the the loaded dataset'): # ALLOWS USERS TO SELECT SPECIFIC COLUMNS AND CREATES DF2
+            if st.checkbox('Please select this box first and then select the columns you want to analyze from the the loaded dataset'): # ALLOWS USERS TO SELECT SPECIFIC COLUMNS AND CREATES DF2
                 selected_columns = st.multiselect('Select Preferred Columns', df1.columns)
                 df2 = df1[selected_columns]
                 st.dataframe(df2)
@@ -94,12 +94,12 @@ def main():
 
         st.subheader('Select data columns to visualize')
 
-        if st.checkbox('Please select this box and then select the columns you want to analyze from the the loaded dataset'): # ALLOWS USERS TO SELECT SPECIFIC COLUMNS AND CREATES DF2
+        if st.checkbox('Please select this box first and then select the columns you want to analyze from the the loaded dataset'): # ALLOWS USERS TO SELECT SPECIFIC COLUMNS AND CREATES DF2
                 selected_columns = st.multiselect('Select Preferred Columns for Visualization', df1.columns)
                 df2 = df1[selected_columns]
                 st.dataframe(df2)
 
-        if st.checkbox('Display Heatmap'):
+        if st.checkbox('Display Correlation Heatmap'):
         	fig1 = plt.figure(figsize=(8,6))
         	sns.heatmap(df2.corr(), annot=True, cmap='GnBu')
         	st.pyplot(fig1)
