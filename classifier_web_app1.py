@@ -94,7 +94,7 @@ def main():
 
         st.subheader('Select data columns to visualize')
 
-        if st.checkbox('Please select this box to select and then select the columns you want to analyze from the the loaded dataset'): # ALLOWS USERS TO SELECT SPECIFIC COLUMNS AND CREATES DF2
+        if st.checkbox('Please select this box and then select the columns you want to analyze from the the loaded dataset'): # ALLOWS USERS TO SELECT SPECIFIC COLUMNS AND CREATES DF2
                 selected_columns = st.multiselect('Select Preferred Columns for Visualization', df1.columns)
                 df2 = df1[selected_columns]
                 st.dataframe(df2)
