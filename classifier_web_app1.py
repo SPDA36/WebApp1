@@ -17,7 +17,7 @@ from sklearn.preprocessing import StandardScaler, MinMaxScaler
 
 ###############################################################
 st.title('Web App for Machine Learning Classification Problems')
-st.write('Please visit the About page for more information by accessing the drop-down menue on the left sidebar.')
+st.write('Please visit the About page for more information by accessing the drop-down menu on the left sidebar.')
 
 def main():
     activities=['EDA','Visualization','Model','About']
