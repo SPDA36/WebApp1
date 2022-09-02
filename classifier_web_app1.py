@@ -53,7 +53,7 @@ def main():
             st.title('Data Selection for EDA')
             st.info('Please select features/columns to explore') # INFO FOR SELECTING FEATURES
 
-            if st.checkbox('Please select this box to select and then select the columns you want to analyze from the the loaded dataset'): # ALLOWS USERS TO SELECT SPECIFIC COLUMNS AND CREATES DF2
+            if st.checkbox('Please select this box and then select the columns you want to analyze from the the loaded dataset'): # ALLOWS USERS TO SELECT SPECIFIC COLUMNS AND CREATES DF2
                 selected_columns = st.multiselect('Select Preferred Columns', df1.columns)
                 df2 = df1[selected_columns]
                 st.dataframe(df2)
