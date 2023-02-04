@@ -179,7 +179,7 @@ def main():
 		selected_columns3 = st.selectbox('Select Preferred Dependent Variable', df1.columns)
     		y = df1[[selected_columns3]]
 		
-		############################# INDEPENDENT VARIABLE SELECTION #######################
+		############################ INDEPENDENT VARIABLE SELECTION #######################
 		st.subheader('Independent/Feature Variables Selection')
 		st.warning('Note: Selecting the Independent/Feature variables are required.')
 		if st.checkbox('Please click to select independent/feature variables. Multiple selections allowed.'):
