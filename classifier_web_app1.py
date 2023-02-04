@@ -191,8 +191,8 @@ def main():
 
 
 
-    			############################# TRIAN TEST SPLIT ####################
-    	
+			############################# TRIAN TEST SPLIT ####################
+
 			st.subheader('Train Test Split')
 			st.write('Data will be split into training and testing sets')
 			testing_size = st.slider('Pick the proportion of data dedicated to testing. Default is 0.20',min_value=0.1, max_value=0.5, value=0.2)
@@ -221,7 +221,7 @@ def main():
 
 
 
-    			############################# SCALING INDEPENDENT VARIABLES #######################
+			############################# SCALING INDEPENDENT VARIABLES #######################
 
 			st.subheader('Scaling Data')
 			st.info("Note: Scaling data might be needed when the scales of various independent/feature variables are largely different.  For example, income verse hours worked.  Income can be vary large compared to hours.  These large distances in values cause algorithms to place higher importance on larger values when in reality we want them to be equally important.  Also, scaling data can help meet some model's assumptions by normalizing the data.")
@@ -299,7 +299,7 @@ def main():
 
 
 
-    		############################## GET PARAM FUNCTION #########################################
+		############################## GET PARAM FUNCTION #########################################
 
 
 			def add_param(name_clf):
