@@ -182,40 +182,40 @@ def main():
 
     			############################# INDEPENDENT VARIABLE SELECTION #######################
 
-    	st.subheader('Independent/Feature Variables Selection')
-    	st.warning('Note: Selecting the Independent/Feature variables are required.')
-    	if st.checkbox('Please click to select independent/feature variables. Multiple selections allowed.'):
-    		selected_columns2 = st.multiselect('Select Preferred Independent Variables. Re-click gray drop-down bar to select another variable.', df1.drop(y.columns, axis=1).columns)
-    		# st.warning('Note: Do not select the dependent/target variable here. Doing so will cause errors')
-    		X = df1[selected_columns2]
+		st.subheader('Independent/Feature Variables Selection')
+		st.warning('Note: Selecting the Independent/Feature variables are required.')
+		if st.checkbox('Please click to select independent/feature variables. Multiple selections allowed.'):
+			selected_columns2 = st.multiselect('Select Preferred Independent Variables. Re-click gray drop-down bar to select another variable.', df1.drop(y.columns, axis=1).columns)
+			# st.warning('Note: Do not select the dependent/target variable here. Doing so will cause errors')
+			X = df1[selected_columns2]
 
 
 
     			############################# TRIAN TEST SPLIT ####################
     	
-    	st.subheader('Train Test Split')
-    	st.write('Data will be split into training and testing sets')
-    	testing_size = st.slider('Pick the proportion of data dedicated to testing. Default is 0.20',min_value=0.1, max_value=0.5, value=0.2)
-    	random_state1 = st.slider('Pick the Random State.',min_value=0, max_value=5000, value=1000)
-    	st.info('Note: Random State is used so the data is randomized but the state of randomization is known.  This is useful when testing various parameters or comparing different models.  They can be tested under the same random condition.')
-    	X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=testing_size, random_state=random_state1)
+			st.subheader('Train Test Split')
+			st.write('Data will be split into training and testing sets')
+			testing_size = st.slider('Pick the proportion of data dedicated to testing. Default is 0.20',min_value=0.1, max_value=0.5, value=0.2)
+			random_state1 = st.slider('Pick the Random State.',min_value=0, max_value=5000, value=1000)
+			st.info('Note: Random State is used so the data is randomized but the state of randomization is known.  This is useful when testing various parameters or comparing different models.  They can be tested under the same random condition.')
+			X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=testing_size, random_state=random_state1)
 
-    	if st.checkbox('Show Training and Testing Splits? (optional)'):
-    		st.write('X_train set')
-    		st.dataframe(X_train)
-    		st.write('Dataset shape: ', X_train.shape)
+			if st.checkbox('Show Training and Testing Splits? (optional)'):
+				st.write('X_train set')
+				st.dataframe(X_train)
+				st.write('Dataset shape: ', X_train.shape)
 
-    		st.write('X_test set')
-    		st.dataframe(X_test)
-    		st.write('Dataset shape: ',X_test.shape)
+				st.write('X_test set')
+				st.dataframe(X_test)
+				st.write('Dataset shape: ',X_test.shape)
 
-    		st.write('y_train')
-    		st.dataframe(y_train)
-    		st.write('Dataset shape: ',y_train.shape)
+				st.write('y_train')
+				st.dataframe(y_train)
+				st.write('Dataset shape: ',y_train.shape)
 
-    		st.write('y_test')
-    		st.dataframe(y_test)
-    		st.write('Dataset shape: ',y_test.shape)
+				st.write('y_test')
+				st.dataframe(y_test)
+				st.write('Dataset shape: ',y_test.shape)
 
 
 
@@ -223,216 +223,216 @@ def main():
 
     			############################# SCALING INDEPENDENT VARIABLES #######################
 
-    	st.subheader('Scaling Data')
-    	st.info("Note: Scaling data might be needed when the scales of various independent/feature variables are largely different.  For example, income verse hours worked.  Income can be vary large compared to hours.  These large distances in values cause algorithms to place higher importance on larger values when in reality we want them to be equally important.  Also, scaling data can help meet some model's assumptions by normalizing the data.")
-    	selected_scaler = None
-    	if st.checkbox('Scale data? (optional)'):
-    		scale_list = ['Pick a Scaler','Standardorize', 'MinMax']
-    		selected_features_to_scale = st.multiselect('1) Select which independent/feature variables to scale and transform', X.columns)
-    		selected_scaler = st.selectbox('2) Select a scaler',scale_list)
+			st.subheader('Scaling Data')
+			st.info("Note: Scaling data might be needed when the scales of various independent/feature variables are largely different.  For example, income verse hours worked.  Income can be vary large compared to hours.  These large distances in values cause algorithms to place higher importance on larger values when in reality we want them to be equally important.  Also, scaling data can help meet some model's assumptions by normalizing the data.")
+			selected_scaler = None
+			if st.checkbox('Scale data? (optional)'):
+				scale_list = ['Pick a Scaler','Standardorize', 'MinMax']
+				selected_features_to_scale = st.multiselect('1) Select which independent/feature variables to scale and transform', X.columns)
+				selected_scaler = st.selectbox('2) Select a scaler',scale_list)
 
-    			############################## Standard Scaler ####################################
+					############################## Standard Scaler ####################################
 
-    		if selected_scaler == 'Standardorize':
-    			if selected_features_to_scale is not None:
-    				data_to_scale = X_train[selected_features_to_scale]
-    				scaler1 = StandardScaler()
-    				scaled_X_train = scaler1.fit_transform(data_to_scale)
-    				scaled_X_train = pd.DataFrame(scaled_X_train, columns=data_to_scale.columns, index=data_to_scale.index)
-    				joined_scaled_with_non_scaled = pd.concat([scaled_X_train, X_train.drop(data_to_scale.columns, axis=1)], axis=1)
+				if selected_scaler == 'Standardorize':
+					if selected_features_to_scale is not None:
+						data_to_scale = X_train[selected_features_to_scale]
+						scaler1 = StandardScaler()
+						scaled_X_train = scaler1.fit_transform(data_to_scale)
+						scaled_X_train = pd.DataFrame(scaled_X_train, columns=data_to_scale.columns, index=data_to_scale.index)
+						joined_scaled_with_non_scaled = pd.concat([scaled_X_train, X_train.drop(data_to_scale.columns, axis=1)], axis=1)
 
-    								##### SCALED X_TRAIN ####
-    				if st.checkbox('Show the data that was scaled and transformed?'):
-    					st.dataframe(scaled_X_train)
-    					st.write('Shape', scaled_X_train.shape)
+										##### SCALED X_TRAIN ####
+						if st.checkbox('Show the data that was scaled and transformed?'):
+							st.dataframe(scaled_X_train)
+							st.write('Shape', scaled_X_train.shape)
 
-    									##### JOINED SCALED WITH UNSCALED #####
-    				if st.checkbox('Show entire X_train set with the scaled and transformed data?  Note: only useful if some of the data was not scaled.'):
-    					st.write('Combined X_train set with the fit and transformed data')
-    					st.dataframe(joined_scaled_with_non_scaled)
-    					st.write('Shape: ',joined_scaled_with_non_scaled.shape)
+											##### JOINED SCALED WITH UNSCALED #####
+						if st.checkbox('Show entire X_train set with the scaled and transformed data?  Note: only useful if some of the data was not scaled.'):
+							st.write('Combined X_train set with the fit and transformed data')
+							st.dataframe(joined_scaled_with_non_scaled)
+							st.write('Shape: ',joined_scaled_with_non_scaled.shape)
 
-    				scaled_X_test = scaler1.transform(X_test[selected_features_to_scale])
-    				scaled_X_test = pd.DataFrame(scaled_X_test, columns=selected_features_to_scale, index=X_test.index)
-    				joined_scaled_with_non_scaled_test = pd.concat([scaled_X_test, X_test.drop(scaled_X_test.columns, axis=1)], axis=1)
-    				
-    				if st.checkbox('Show entire X_test set with the transformed data?  Note: only useful if some of the data was not scaled.'):
-    					st.write('Combined X_test set with transformed data')
-    					st.dataframe(joined_scaled_with_non_scaled_test)
-    					st.write('Shape: ',joined_scaled_with_non_scaled_test.shape)
+						scaled_X_test = scaler1.transform(X_test[selected_features_to_scale])
+						scaled_X_test = pd.DataFrame(scaled_X_test, columns=selected_features_to_scale, index=X_test.index)
+						joined_scaled_with_non_scaled_test = pd.concat([scaled_X_test, X_test.drop(scaled_X_test.columns, axis=1)], axis=1)
 
-    			############################## Min Max Scaler ####################################
+						if st.checkbox('Show entire X_test set with the transformed data?  Note: only useful if some of the data was not scaled.'):
+							st.write('Combined X_test set with transformed data')
+							st.dataframe(joined_scaled_with_non_scaled_test)
+							st.write('Shape: ',joined_scaled_with_non_scaled_test.shape)
 
-
-    		if selected_scaler == 'MinMax':
-    			if selected_features_to_scale is not None:
-    				data_to_scale = X_train[selected_features_to_scale]
-    				scaler2 = MinMaxScaler()
-    				scaled_X_train = scaler2.fit_transform(data_to_scale)
-    				scaled_X_train = pd.DataFrame(scaled_X_train, columns=data_to_scale.columns, index=data_to_scale.index)
-    				joined_scaled_with_non_scaled = pd.concat([scaled_X_train, X_train.drop(data_to_scale.columns, axis=1)], axis=1)
-    				
-    				if st.checkbox('Show the data that was scaled and transformed?'):
-    					st.dataframe(scaled_X_train)
+					############################## Min Max Scaler ####################################
 
 
-    				if st.checkbox('Show entire X_train set with the scaled and transformed data?  Note: only useful if some of the data was not scaled.'):
-    					st.write('Combined X_train set with the fit and transformed data')
-    					st.dataframe(joined_scaled_with_non_scaled)
+				if selected_scaler == 'MinMax':
+					if selected_features_to_scale is not None:
+						data_to_scale = X_train[selected_features_to_scale]
+						scaler2 = MinMaxScaler()
+						scaled_X_train = scaler2.fit_transform(data_to_scale)
+						scaled_X_train = pd.DataFrame(scaled_X_train, columns=data_to_scale.columns, index=data_to_scale.index)
+						joined_scaled_with_non_scaled = pd.concat([scaled_X_train, X_train.drop(data_to_scale.columns, axis=1)], axis=1)
 
-    				scaled_X_test = scaler2.transform(X_test[selected_features_to_scale])
-    				scaled_X_test = pd.DataFrame(scaled_X_test, columns=selected_features_to_scale, index=X_test.index)
-    				joined_scaled_with_non_scaled_test = pd.concat([scaled_X_test, X_test.drop(scaled_X_test.columns, axis=1)], axis=1)
-    				
-    				if st.checkbox('Show entire X_test set with the transformed data?  Note: only useful if some of the data was not scaled.'):
-    					st.write('Combined X_test set with transformed data')
-    					st.dataframe(joined_scaled_with_non_scaled_test)
+						if st.checkbox('Show the data that was scaled and transformed?'):
+							st.dataframe(scaled_X_train)
 
 
-    					####### joined_scaled_with_non_scaled_test IS THE COMBINED DATASET FOR TESTING THE MODEL #######
-    					####### joined_scaled_with_non_scaled IS THE COMBINED DATASET FOR TRAINING THE MODEL ###########
+						if st.checkbox('Show entire X_train set with the scaled and transformed data?  Note: only useful if some of the data was not scaled.'):
+							st.write('Combined X_train set with the fit and transformed data')
+							st.dataframe(joined_scaled_with_non_scaled)
 
-    	st.subheader('Select the Machine Learning Algorithm')
-    	algor_list = ['SVC', 'Random Forest Classificer', 'KNN', 'LogisticRegression']
-    	st.info('Note: There are many different hyperparameters that could have been included but this project is a simple test to show what is possible and not all inclusive.')
-    	algorithm = st.selectbox('Select from the list of machine learning algorithms', algor_list)
+						scaled_X_test = scaler2.transform(X_test[selected_features_to_scale])
+						scaled_X_test = pd.DataFrame(scaled_X_test, columns=selected_features_to_scale, index=X_test.index)
+						joined_scaled_with_non_scaled_test = pd.concat([scaled_X_test, X_test.drop(scaled_X_test.columns, axis=1)], axis=1)
+
+						if st.checkbox('Show entire X_test set with the transformed data?  Note: only useful if some of the data was not scaled.'):
+							st.write('Combined X_test set with transformed data')
+							st.dataframe(joined_scaled_with_non_scaled_test)
+
+
+							####### joined_scaled_with_non_scaled_test IS THE COMBINED DATASET FOR TESTING THE MODEL #######
+							####### joined_scaled_with_non_scaled IS THE COMBINED DATASET FOR TRAINING THE MODEL ###########
+
+			st.subheader('Select the Machine Learning Algorithm')
+			algor_list = ['SVC', 'Random Forest Classificer', 'KNN', 'LogisticRegression']
+			st.info('Note: There are many different hyperparameters that could have been included but this project is a simple test to show what is possible and not all inclusive.')
+			algorithm = st.selectbox('Select from the list of machine learning algorithms', algor_list)
 
 
 
     		############################## GET PARAM FUNCTION #########################################
 
 
-    	def add_param(name_clf):
-    		params=dict()
+			def add_param(name_clf):
+				params=dict()
 
-    		if name_clf=='SVC':
-    			st.info('Below are the hyperparameters that can be adjusted')
-    			C = st.number_input('Input the C parameter', min_value=0.0001, max_value=100.0, value=0.001, step=0.0001)
-    			st.write('C value selected:', C)
-    			kernel_list = ['linear', 'poly', 'rbf', 'sigmoid', 'precomputed']
-    			kernel = st.selectbox('Select the kernel',kernel_list)
-    			gamma = st.number_input('Input the gamma parameter', min_value=0.0001, max_value=100.0, value=0.001, step=0.0001)
-    			st.write('Gamma value selected: ', gamma)
-    			params['C'] = C
-    			params['kernel'] = kernel
-    			params['gamma'] = gamma
+				if name_clf=='SVC':
+					st.info('Below are the hyperparameters that can be adjusted')
+					C = st.number_input('Input the C parameter', min_value=0.0001, max_value=100.0, value=0.001, step=0.0001)
+					st.write('C value selected:', C)
+					kernel_list = ['linear', 'poly', 'rbf', 'sigmoid', 'precomputed']
+					kernel = st.selectbox('Select the kernel',kernel_list)
+					gamma = st.number_input('Input the gamma parameter', min_value=0.0001, max_value=100.0, value=0.001, step=0.0001)
+					st.write('Gamma value selected: ', gamma)
+					params['C'] = C
+					params['kernel'] = kernel
+					params['gamma'] = gamma
 
-    		if name_clf=='Random Forest Classificer':
-    			st.info('Below are the hyperparameters that can be adjusted')
-    			n_estimators = st.slider('Select the n_estimators parameter', min_value=25, max_value=500, value=100, step=25)
-    			params['n_estimators'] = n_estimators
+				if name_clf=='Random Forest Classificer':
+					st.info('Below are the hyperparameters that can be adjusted')
+					n_estimators = st.slider('Select the n_estimators parameter', min_value=25, max_value=500, value=100, step=25)
+					params['n_estimators'] = n_estimators
 
-    		if name_clf=='KNN':
-    			st.info('Below are the hyperparameters that can be adjusted')
-    			n_neighbors = st.slider('Select the n_neighbors parameter', min_value=1, max_value=50, value=9, step=1)
-    			params['n_neighbors'] = n_neighbors
+				if name_clf=='KNN':
+					st.info('Below are the hyperparameters that can be adjusted')
+					n_neighbors = st.slider('Select the n_neighbors parameter', min_value=1, max_value=50, value=9, step=1)
+					params['n_neighbors'] = n_neighbors
 
-    		if name_clf=='LogisticRegression':
-    			st.info('Below are the hyperparameters that can be adjusted')
-    			max_iter = st.slider('Select the max_iter parameter', min_value=100, max_value=10000, step=100, value=10000)
-    			C = st.number_input('Select the C parameter', min_value=0.001, max_value=10.0, step=0.001, value=1.0)
-    			st.write('C value selected:', C)
-    			params['max_iter'] = max_iter
-    			params['C'] = C
+				if name_clf=='LogisticRegression':
+					st.info('Below are the hyperparameters that can be adjusted')
+					max_iter = st.slider('Select the max_iter parameter', min_value=100, max_value=10000, step=100, value=10000)
+					C = st.number_input('Select the C parameter', min_value=0.001, max_value=10.0, step=0.001, value=1.0)
+					st.write('C value selected:', C)
+					params['max_iter'] = max_iter
+					params['C'] = C
 
-    		return params
+				return params
 
-    	params = add_param(algorithm)
+			params = add_param(algorithm)
 
-    		######################### PASSING ALGORITHM AND PARAMS ##################################
+				######################### PASSING ALGORITHM AND PARAMS ##################################
 
-    	def get_classififier(name_clf,params):
-    		clf = None
-    		if name_clf == 'SVC':
-    			clf = SVC(C = params['C'], kernel = params['kernel'], gamma = params['gamma'])
+			def get_classififier(name_clf,params):
+				clf = None
+				if name_clf == 'SVC':
+					clf = SVC(C = params['C'], kernel = params['kernel'], gamma = params['gamma'])
 
-    		elif name_clf == 'Random Forest Classificer':
-    			clf = RandomForestClassifier(n_estimators = params['n_estimators'], n_jobs = -1)
+				elif name_clf == 'Random Forest Classificer':
+					clf = RandomForestClassifier(n_estimators = params['n_estimators'], n_jobs = -1)
 
-    		elif name_clf == 'KNN':
-    			clf = KNeighborsClassifier(n_neighbors = params['n_neighbors'], n_jobs = -1)
+				elif name_clf == 'KNN':
+					clf = KNeighborsClassifier(n_neighbors = params['n_neighbors'], n_jobs = -1)
 
-    		elif name_clf == 'LogisticRegression':
-    			clf = LogisticRegression(max_iter = params['max_iter'], C = params['C'], n_jobs = -1)
+				elif name_clf == 'LogisticRegression':
+					clf = LogisticRegression(max_iter = params['max_iter'], C = params['C'], n_jobs = -1)
 
-    		else:
-    			st.warning('Please select a machine learning algorithm')
+				else:
+					st.warning('Please select a machine learning algorithm')
 
-    		return clf
-
-
-
-    	clf = get_classififier(algorithm, params)
-
- 			######################################### MODEL VAL EVAL ####################################
-    	st.subheader('Model Validation & Evaluation')
-    	st.info('Note: Repeated Stratified Cross Validation is being used.')
-    	
-    	st.write('Cross Validation Options.  Leave at default values if unsure.')
-    	splits = st.slider('Select n_splits to divide test data for evaluation', min_value=2, max_value=20, value=5)
-    	repeats = st.slider('Select n_repeats to repeat the cross validation', min_value=1,max_value=20, value=10)
-    	random_state2 = st.slider('Select the random state', min_value=0, max_value=5000, value=1000 )    	
-    	cv = RepeatedStratifiedKFold(n_splits=splits, n_repeats=repeats, random_state=random_state2)
+				return clf
 
 
-    	if selected_scaler == None:
-    		st.write(clf)
-    		score = cross_val_score(estimator=clf, X = X_train, y = y_train, cv = cv, scoring = 'accuracy', n_jobs=-1)
-    		st.write('Cross Validation Mean Score: ', round(score.mean()*100,3),'%')
-    		st.write('Cross Validation Standard Deviation +- Score:', round(score.std()*100,3),'%')
 
-    		st.write('Validation Scores per Iteration of Cross Validation:')
-    		st.dataframe(score)
-    		fig = plt.figure()
-    		plt.title('Distribution of Validation Scores')
-    		sns.histplot(score, bins=6, kde=True)
-    		st.pyplot(fig)
-    		
-    		st.warning('Before moving on to Model Testing, consider the scaler used (if used) and the hyperparameters selected.  Make all FINAL changes before moving on to the model testing phase.')
-    		
-    	else:
-    		st.write(clf)
-    		score = cross_val_score(estimator=clf, X = joined_scaled_with_non_scaled, y = y_train, cv = cv, scoring = 'accuracy', n_jobs=-1)
-    		st.write('Cross Validation Mean Score: ', round(score.mean()*100,3),'%')
-    		st.write('Cross Validation Standard Deviation +- Score:', round(score.std()*100,3),'%')
+			clf = get_classififier(algorithm, params)
 
-    		st.write('Validation Scores per Iteration of Cross Validation:')
-    		st.dataframe(score)
-    		fig = plt.figure()
-    		plt.title('Distribution of Validation Scores')
-    		sns.histplot(score, bins=6, kde=True)
-    		st.pyplot(fig)
+					######################################### MODEL VAL EVAL ####################################
+			st.subheader('Model Validation & Evaluation')
+			st.info('Note: Repeated Stratified Cross Validation is being used.')
 
-    		st.warning('Before moving on to Model Testing, consider the scaler used (if used) and the hyperparameters selected.  Make all FINAL changes before moving on to the model testing phase.')
+			st.write('Cross Validation Options.  Leave at default values if unsure.')
+			splits = st.slider('Select n_splits to divide test data for evaluation', min_value=2, max_value=20, value=5)
+			repeats = st.slider('Select n_repeats to repeat the cross validation', min_value=1,max_value=20, value=10)
+			random_state2 = st.slider('Select the random state', min_value=0, max_value=5000, value=1000 )    	
+			cv = RepeatedStratifiedKFold(n_splits=splits, n_repeats=repeats, random_state=random_state2)
 
 
-           ############################### MODEL TESTING #####################################
- 
-    	st.subheader('Model Testing and Scoring')
-    	st.warning('DO NOT TUNE PARAMETERS BASED ON THESE RESULTS.  TUNING OCCURS BEFORE HAVING ACCESS TO TESTING DATA.  TESTING DATA IS MEANT TO BE UNSEEN.  ANY MODEL PARAMETERS CHANGED BASED ON THE MODEL TESTING SCORES INVALIDATES THE ENTIRE MODEL DUE TO THE BIAS INTRODUCED.')
-    	if st.checkbox('Test Model?'):
+			if selected_scaler == None:
+				st.write(clf)
+				score = cross_val_score(estimator=clf, X = X_train, y = y_train, cv = cv, scoring = 'accuracy', n_jobs=-1)
+				st.write('Cross Validation Mean Score: ', round(score.mean()*100,3),'%')
+				st.write('Cross Validation Standard Deviation +- Score:', round(score.std()*100,3),'%')
 
-    		if selected_scaler == None:
-    			clf.fit(X_train,y_train)
-    			y_pred = clf.predict(X_test)
-    			st.write('Model Accuracy Score: ', round(accuracy_score(y_test,y_pred)*100,3),'%')
-    			st.write('Confusion Matrix:')
-    			st.dataframe(confusion_matrix(y_test,y_pred))
-    			st.write('Test Values verse Predicted Values: ')
-    			y_pred = pd.DataFrame(y_pred, columns=['predicted values'], index=y_test.index)
-    			test_pred = pd.concat([y_test, y_pred], axis=1)
-    			st.dataframe(test_pred)
+				st.write('Validation Scores per Iteration of Cross Validation:')
+				st.dataframe(score)
+				fig = plt.figure()
+				plt.title('Distribution of Validation Scores')
+				sns.histplot(score, bins=6, kde=True)
+				st.pyplot(fig)
 
-    		else:
-    			clf.fit(joined_scaled_with_non_scaled, y_train)
-    			y_pred = clf.predict(joined_scaled_with_non_scaled_test)
-    			st.write('Model Accuracy Score: ', round(accuracy_score(y_test,y_pred)*100,3),'%')
-    			st.write('Confusion Matrix:')
-    			st.dataframe(confusion_matrix(y_test,y_pred))
-    			st.write('Test Values verse Predicted Values: ')
-    			y_pred = pd.DataFrame(y_pred, columns=['predicted values'], index=y_test.index)
-    			test_pred = pd.concat([y_test, y_pred], axis=1)
-    			st.dataframe(test_pred)
+				st.warning('Before moving on to Model Testing, consider the scaler used (if used) and the hyperparameters selected.  Make all FINAL changes before moving on to the model testing phase.')
+
+			else:
+				st.write(clf)
+				score = cross_val_score(estimator=clf, X = joined_scaled_with_non_scaled, y = y_train, cv = cv, scoring = 'accuracy', n_jobs=-1)
+				st.write('Cross Validation Mean Score: ', round(score.mean()*100,3),'%')
+				st.write('Cross Validation Standard Deviation +- Score:', round(score.std()*100,3),'%')
+
+				st.write('Validation Scores per Iteration of Cross Validation:')
+				st.dataframe(score)
+				fig = plt.figure()
+				plt.title('Distribution of Validation Scores')
+				sns.histplot(score, bins=6, kde=True)
+				st.pyplot(fig)
+
+				st.warning('Before moving on to Model Testing, consider the scaler used (if used) and the hyperparameters selected.  Make all FINAL changes before moving on to the model testing phase.')
+
+
+			   ############################### MODEL TESTING #####################################
+
+			st.subheader('Model Testing and Scoring')
+			st.warning('DO NOT TUNE PARAMETERS BASED ON THESE RESULTS.  TUNING OCCURS BEFORE HAVING ACCESS TO TESTING DATA.  TESTING DATA IS MEANT TO BE UNSEEN.  ANY MODEL PARAMETERS CHANGED BASED ON THE MODEL TESTING SCORES INVALIDATES THE ENTIRE MODEL DUE TO THE BIAS INTRODUCED.')
+			if st.checkbox('Test Model?'):
+
+				if selected_scaler == None:
+					clf.fit(X_train,y_train)
+					y_pred = clf.predict(X_test)
+					st.write('Model Accuracy Score: ', round(accuracy_score(y_test,y_pred)*100,3),'%')
+					st.write('Confusion Matrix:')
+					st.dataframe(confusion_matrix(y_test,y_pred))
+					st.write('Test Values verse Predicted Values: ')
+					y_pred = pd.DataFrame(y_pred, columns=['predicted values'], index=y_test.index)
+					test_pred = pd.concat([y_test, y_pred], axis=1)
+					st.dataframe(test_pred)
+
+				else:
+					clf.fit(joined_scaled_with_non_scaled, y_train)
+					y_pred = clf.predict(joined_scaled_with_non_scaled_test)
+					st.write('Model Accuracy Score: ', round(accuracy_score(y_test,y_pred)*100,3),'%')
+					st.write('Confusion Matrix:')
+					st.dataframe(confusion_matrix(y_test,y_pred))
+					st.write('Test Values verse Predicted Values: ')
+					y_pred = pd.DataFrame(y_pred, columns=['predicted values'], index=y_test.index)
+					test_pred = pd.concat([y_test, y_pred], axis=1)
+					st.dataframe(test_pred)
 
 
 
