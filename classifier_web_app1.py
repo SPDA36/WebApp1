@@ -110,40 +110,40 @@ def main():
 				df2 = df1[selected_columns]
 				st.dataframe(df2)
 
-		if st.checkbox('Display Correlation Heatmap'):
-			fig1 = plt.figure(figsize=(8,6))
-			sns.heatmap(df2.corr(), annot=True, cmap='GnBu')
-			st.pyplot(fig1)
+			if st.checkbox('Display Correlation Heatmap'):
+				fig1 = plt.figure(figsize=(8,6))
+				sns.heatmap(df2.corr(), annot=True, cmap='GnBu')
+				st.pyplot(fig1)
 
-		if st.checkbox('Display Pair Plot'):
-			if st.checkbox('Include a Hue in your Piar Plot?  Not required.'):
-				st.warning('Note: Certain columns will not work as a hue.  It is best to use hue for categorical columns.  For instance, use a categorical target column.')
-				selected_columns1 = st.selectbox('Select column to use as hue',df2.columns)
-				fig2 = sns.pairplot(df2, hue=selected_columns1)
-				st.pyplot(fig2)
-			else:
-				fig2 = sns.pairplot(df2)
-				st.pyplot(fig2)
+			if st.checkbox('Display Pair Plot'):
+				if st.checkbox('Include a Hue in your Piar Plot?  Not required.'):
+					st.warning('Note: Certain columns will not work as a hue.  It is best to use hue for categorical columns.  For instance, use a categorical target column.')
+					selected_columns1 = st.selectbox('Select column to use as hue',df2.columns)
+					fig2 = sns.pairplot(df2, hue=selected_columns1)
+					st.pyplot(fig2)
+				else:
+					fig2 = sns.pairplot(df2)
+					st.pyplot(fig2)
 
-		if st.checkbox('Display all selected columns as their own Boxplot.'):
-			st.info('Note: This will display miltiple boxplots on their own visual figure.  This is because some columns can have different scales and that makes it difficult to visualize on one figure')
-			for i in df2.columns:
-				fig3 = plt.figure()
-				sns.boxplot(df2[i])
-				st.pyplot(fig3)
+			if st.checkbox('Display all selected columns as their own Boxplot.'):
+				st.info('Note: This will display miltiple boxplots on their own visual figure.  This is because some columns can have different scales and that makes it difficult to visualize on one figure')
+				for i in df2.columns:
+					fig3 = plt.figure()
+					sns.boxplot(df2[i])
+					st.pyplot(fig3)
 
-		if st.checkbox('Display all selected columns on one Boxplot figure'):
-			st.info('Note: Select or deselect columns from above to choose which columns to include in the visual')
-			fig4 = plt.figure()
-			sns.boxplot(data=df2, orient='h')
-			plt.tight_layout()
-			st.pyplot(fig4)
+			if st.checkbox('Display all selected columns on one Boxplot figure'):
+				st.info('Note: Select or deselect columns from above to choose which columns to include in the visual')
+				fig4 = plt.figure()
+				sns.boxplot(data=df2, orient='h')
+				plt.tight_layout()
+				st.pyplot(fig4)
 
-		if st.checkbox('Display KDE Plot'):
-			st.info('Note: Select or deselect columns from above to choose which columns to include in the visual')
-			fig5 = plt.figure()
-			sns.kdeplot(df2)
-			st.pyplot(fig5)
+			if st.checkbox('Display KDE Plot'):
+				st.info('Note: Select or deselect columns from above to choose which columns to include in the visual')
+				fig5 = plt.figure()
+				sns.kdeplot(df2)
+				st.pyplot(fig5)
 
 
 
