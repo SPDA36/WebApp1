@@ -139,10 +139,10 @@ def main():
 			plt.tight_layout()
 			st.pyplot(fig4)
 
-		if st.checkbox('Display Histogram'):
+		if st.checkbox('Display KDE Plot'):
 			st.info('Note: Select or deselect columns from above to choose which columns to include in the visual')
 			fig5 = plt.figure()
-			sns.histplot(df2)
+			sns.kdeplot(df2)
 			st.pyplot(fig5)
 
 
